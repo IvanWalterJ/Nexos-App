@@ -1,0 +1,238 @@
+@import "tailwindcss";
+
+
+@theme inline {
+  --font-sans: "Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* Brand Palette */
+  --color-nexos-blue: #2563eb;
+  --color-nexos-indigo: #4f46e5;
+  --color-nexos-violet: #7c3aed;
+  --color-nexos-sky: #0ea5e9;
+  --color-nexos-gold: #d97706;
+
+  /* Neutral scale */
+  --color-n-50:  #f8fafc;
+  --color-n-100: #f1f5f9;
+  --color-n-200: #e2e8f0;
+  --color-n-300: #cbd5e1;
+  --color-n-400: #94a3b8;
+  --color-n-500: #64748b;
+  --color-n-600: #475569;
+  --color-n-700: #334155;
+  --color-n-800: #1e293b;
+  --color-n-900: #0f172a;
+  --color-n-950: #020617;
+
+  /* Radii */
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --radius-3xl: 2.5rem;
+}
+
+:root {
+  --bg-base:    #060c18;
+  --bg-surface: rgba(15, 23, 42, 0.7);
+  --bg-card:    rgba(30, 41, 59, 0.6);
+  --text-base:  #e2e8f0;
+  --text-muted: #64748b;
+  --text-dim:   #94a3b8;
+  --border:     rgba(148, 163, 184, 0.12);
+  --border-lit: rgba(148, 163, 184, 0.25);
+  --primary:    #6366f1;
+  --primary-lit:#818cf8;
+  --primary-dim: rgba(99, 102, 241, 0.2);
+  --accent:     #0ea5e9;
+  --shadow-glow: 0 0 60px rgba(99, 102, 241, 0.15);
+}
+
+*, *::before, *::after {
+  border-color: var(--border);
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-base);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── Background ──────────────────────────────────────────── */
+.bg-scene {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(ellipse 80% 80% at 50% -20%, rgba(99,102,241,0.25), transparent),
+              radial-gradient(ellipse 60% 60% at 80% 80%, rgba(14,165,233,0.12), transparent),
+              radial-gradient(ellipse 50% 50% at 20% 60%, rgba(124,58,237,0.10), transparent);
+  background-color: var(--bg-base);
+}
+
+/* Animated orbit blobs */
+.bg-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+  animation: drift 12s ease-in-out infinite alternate;
+}
+.bg-blob-1 {
+  width: 600px; height: 600px;
+  background: rgba(99,102,241,0.4);
+  top: -150px; left: -150px;
+  animation-delay: 0s;
+}
+.bg-blob-2 {
+  width: 500px; height: 500px;
+  background: rgba(14,165,233,0.3);
+  bottom: -100px; right: -100px;
+  animation-delay: -4s;
+}
+.bg-blob-3 {
+  width: 350px; height: 350px;
+  background: rgba(124,58,237,0.3);
+  top: 40%; left: 40%;
+  animation-delay: -8s;
+}
+
+@keyframes drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(40px, 30px) scale(1.05); }
+}
+
+/* Fine grid overlay */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(148,163,184,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148,163,184,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 100% 100% at 50% 50%, black 40%, transparent 100%);
+}
+
+/* ─── Glass surfaces ──────────────────────────────────────── */
+.glass {
+  background: var(--bg-card);
+  backdrop-filter: blur(32px) saturate(160%);
+  -webkit-backdrop-filter: blur(32px) saturate(160%);
+  border: 1px solid var(--border-lit);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+.glass-inner {
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+}
+
+/* ─── Interactive ─────────────────────────────────────────── */
+.btn-primary {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: #fff;
+  border-radius: 1rem;
+  padding: 1rem 2rem;
+  font-weight: 700;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px rgba(99,102,241,0.4), 0 0 0 1px rgba(99,102,241,0.3);
+}
+.btn-primary:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 30px rgba(99,102,241,0.6), 0 0 0 1px rgba(99,102,241,0.5);
+}
+
+.btn-secondary {
+  background: rgba(30, 41, 59, 0.8);
+  color: var(--text-base);
+  border: 1px solid var(--border-lit);
+  border-radius: 1rem;
+  padding: 1rem 2rem;
+  font-weight: 600;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-secondary:hover {
+  background: rgba(51, 65, 85, 0.8);
+  transform: translateY(-2px);
+  border-color: rgba(148,163,184,0.4);
+}
+
+/* Card lift on hover */
+.card-hover {
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-hover:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px var(--border-lit);
+}
+
+/* ─── Form Inputs ─────────────────────────────────────────── */
+.nexos-input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3.25rem;
+  border-radius: 0.875rem;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border-lit);
+  color: var(--text-base);
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+.nexos-input::placeholder {
+  color: var(--text-muted);
+}
+.nexos-input:focus {
+  border-color: var(--primary);
+  background: rgba(15, 23, 42, 0.8);
+  box-shadow: 0 0 0 3px var(--primary-dim), 0 4px 16px rgba(0,0,0,0.3);
+}
+
+/* ─── Text utilities ──────────────────────────────────────── */
+.text-gradient {
+  background: linear-gradient(135deg, #c7d2fe, #818cf8, #6366f1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-sky {
+  background: linear-gradient(135deg, #bae6fd, #38bdf8, #0ea5e9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Pill badge ──────────────────────────────────────────── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.875rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid rgba(99,102,241,0.35);
+  background: rgba(99,102,241,0.12);
+  color: #a5b4fc;
+}
+
+/* ─── Misc ────────────────────────────────────────────────── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Divider with shimmer */
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border-lit), transparent);
+}
