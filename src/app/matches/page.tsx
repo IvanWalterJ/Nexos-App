@@ -13,6 +13,7 @@ interface Professional {
   specialty: string;
   price_online: number;
   price_presencial: number;
+  displayPrice: number;
   modality: string;
   location: string;
   avg_rating: number;

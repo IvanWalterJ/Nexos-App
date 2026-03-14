@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
+import { getURL } from "@/lib/utils";
 
 const SPECIALTIES = [
   "Psicología", "Nutrición", "Fisioterapia", "Medicina General",
@@ -30,7 +31,10 @@ export default function ProfessionalSignupPage() {
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { name, role: "professional", specialty } },
+      options: { 
+        data: { name, role: "professional", specialty },
+        emailRedirectTo: `${getURL()}/auth/callback`
+      },
     });
     setLoading(false);
     if (error) { setError(error.message); return; }

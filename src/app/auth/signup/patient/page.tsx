@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
+import { getURL } from "@/lib/utils";
 
 export default function PatientSignupPage() {
   const router = useRouter();
@@ -24,7 +25,10 @@ export default function PatientSignupPage() {
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { name, role: "patient" } },
+      options: { 
+        data: { name, role: "patient" },
+        emailRedirectTo: `${getURL()}/auth/callback`
+      },
     });
     setLoading(false);
     if (error) { setError(error.message); return; }
