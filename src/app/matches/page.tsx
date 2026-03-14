@@ -32,6 +32,69 @@ const GRADIENTS = [
   "from-fuchsia-600 to-purple-600"
 ];
 
+const MOCK_PROFESSIONALS: Professional[] = [
+  {
+    id: "mock-1",
+    name: "Lic. Valentina Romero",
+    specialty: "Psicología",
+    price_online: 12000,
+    price_presencial: 18000,
+    displayPrice: 12000,
+    modality: "both",
+    location: "Palermo, CABA",
+    avg_rating: 4.9,
+    review_count: 142,
+    is_active: true,
+    matchScore: 98,
+    gradient: "from-violet-600 to-indigo-600"
+  },
+  {
+    id: "mock-2",
+    name: "Dr. Javier Katz",
+    specialty: "Medicina General",
+    price_online: 15000,
+    price_presencial: 22000,
+    displayPrice: 15000,
+    modality: "both",
+    location: "Recoleta, CABA",
+    avg_rating: 4.8,
+    review_count: 89,
+    is_active: true,
+    matchScore: 95,
+    gradient: "from-sky-600 to-cyan-500"
+  },
+  {
+    id: "mock-3",
+    name: "Lic. Martín Soria",
+    specialty: "Nutrición",
+    price_online: 10000,
+    price_presencial: 14000,
+    displayPrice: 10000,
+    modality: "online",
+    location: "Online",
+    avg_rating: 4.7,
+    review_count: 56,
+    is_active: true,
+    matchScore: 92,
+    gradient: "from-emerald-600 to-teal-500"
+  },
+  {
+    id: "mock-4",
+    name: "Dra. Elena Paz",
+    specialty: "Dermatología",
+    price_online: 18000,
+    price_presencial: 25000,
+    displayPrice: 18000,
+    modality: "presencial",
+    location: "Belgrano, CABA",
+    avg_rating: 4.9,
+    review_count: 110,
+    is_active: true,
+    matchScore: 89,
+    gradient: "from-rose-600 to-pink-500"
+  }
+];
+
 const SPECIALTIES = [
   "Psicología", "Psicopedagogía", "Nutrición", "Fisioterapia", "Medicina General",
   "Odontología", "Cardiología", "Dermatología", "Traumatología"
@@ -55,8 +118,10 @@ export default function MatchesPage() {
         `)
         .eq('is_active', true);
 
+      let formatted: Professional[] = [];
+      
       if (data) {
-        const formatted: Professional[] = data.map((p: any, i) => {
+        formatted = data.map((p: any, i) => {
           // Determine the lowest price to show
           const prices = [];
           if (p.price_online) prices.push(p.price_online);
@@ -64,7 +129,7 @@ export default function MatchesPage() {
           const displayPrice = prices.length > 0 ? Math.min(...prices) : 0;
 
           // Pseudo match score based on rating or just random between 80-99 for the UI
-          const score = p.avg_rating ? Math.floor(p.avg_rating * 18) + Math.floor(Math.random() * 10) : 85 + Math.floor(Math.random() * 14);
+          const score = p.avg_rating ? Math.floor(p.avg_rating * 18) + Math.floor(Math.random() * 10) : 75 + Math.floor(Math.random() * 15);
 
           return {
             id: p.id,
@@ -82,11 +147,14 @@ export default function MatchesPage() {
             gradient: GRADIENTS[i % GRADIENTS.length]
           };
         });
-        
-        // Sort by match score descending
-        formatted.sort((a, b) => b.matchScore - a.matchScore);
-        setProfessionals(formatted);
       }
+
+      // Merge with Mock Data for demo purposes
+      const combined = [...MOCK_PROFESSIONALS, ...formatted];
+        
+      // Sort by match score descending
+      combined.sort((a, b) => b.matchScore - a.matchScore);
+      setProfessionals(combined);
       setLoading(false);
     };
 
