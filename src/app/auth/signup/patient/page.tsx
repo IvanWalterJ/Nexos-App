@@ -15,6 +15,7 @@ export default function PatientSignupPage() {
   const [showPw, setShowPw]     = useState(false);
   const [loading, setLoading]   = useState(false);
   const [error, setError]       = useState<string | null>(null);
+  const [success, setSuccess]   = useState(false);
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,8 +28,35 @@ export default function PatientSignupPage() {
     });
     setLoading(false);
     if (error) { setError(error.message); return; }
-    router.push("/onboarding/quiz");
+    setSuccess(true);
   };
+
+  if (success) {
+    return (
+      <main className="min-h-screen relative flex items-center justify-center p-6 overflow-hidden">
+        <div className="bg-scene">
+          <div className="bg-blob bg-blob-1" />
+          <div className="bg-blob bg-blob-3" />
+        </div>
+        <div className="bg-grid" />
+        <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} className="w-full max-w-md z-10">
+          <div className="glass rounded-3xl p-8 sm:p-10 space-y-7 text-center">
+            <div className="w-16 h-16 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto shadow-[0_0_30px_rgba(16,185,129,0.3)]">
+              <Mail className="w-8 h-8 text-emerald-400" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-black text-white">Revisá tu correo</h1>
+              <p className="text-sm text-n-400 mt-2">Te enviamos un enlace para confirmar tu cuenta a <strong className="text-sky-400">{email}</strong>.</p>
+              <p className="text-sm text-n-500 mt-2">Por favor confirmá tu correo para poder reservar turnos.</p>
+            </div>
+            <Link href="/auth/login" className="btn-primary w-full inline-block py-4">
+              Ir a Iniciar Sesión
+            </Link>
+          </div>
+        </motion.div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen relative flex items-center justify-center p-6 overflow-hidden">
